@@ -1,0 +1,32 @@
+def mod(modular, base, exponent = 1): # return a^b(mod n)
+    """Return a**b(mod n) where
+    a,b,n correspond to base, exponent, modular."""
+    binary = bin(exponent);
+    binary.reverse();
+    # Ger the binary representation of the exponent
+    result, square = 1, base%modular;
+    for i in range(len(binary)):
+        if binary[i]:
+            result = (square*result) % modular;
+        square = (square**2) % modular;
+    return result;
+
+def gcd(a, b):
+    """Return the greatest common divisor of a and b"""
+    if (a < b):
+        a, b = b, a; # Make sure a is always bigger
+    while (b != 0):
+        a, b = b, a%b;
+    return a;
+
+def lcm(a, b):
+    """Return the least common multiple of a and b"""
+    return int(a*b/gcd(a,b));
+
+def bin(n):
+    """Return the binary expansion of a positive integer"""
+    result = [];
+    while n != 0:
+        result = [1 & n] + result;
+        n = n >> 1;
+    return result;
