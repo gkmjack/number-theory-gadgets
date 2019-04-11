@@ -1,4 +1,3 @@
-from math import floor, sqrt;
 from random import randint;
 from basic import mod, gcd;
 
@@ -6,24 +5,26 @@ DEFAULT_TRIALS = 50;
 
 def is_prime(n):
     """Decides whether a positive integer 'n'(>=2) is prime."""
-    for i in range(2,floor(sqrt(n))+1):
+    for i in range(2,n):
         if ((n%i) == 0):
             return 0;
     return 1;
 
 def factorize(n):
-    """Factor a small number into products of primes"""
-    possible_factors = [];
+    """Factor a (small) number into products of primes"""
+    factors = {};
+    # Create a dictionary (key: prime factors, value: its exponent)
     for i in range(2,n+1):
-        if (is_prime(i)):
-            possible_factors.append(i);
-    factors = [];
+        if (n%i == 0 and is_prime(i)):
+            factors[i] = 0;
+
     while n != 1:
-        for i in possible_factors:
+        for i in factors:
             if ((n%i) == 0):
-                factors.append(i);
+                factors[i] += 1;
                 n /= i;
     return factors;
+
 
 def fermat_test(n, trials = DEFAULT_TRIALS, show_witness = False):
     """Using Fermet test, to check (with certain confidence) whether a

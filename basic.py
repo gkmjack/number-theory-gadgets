@@ -1,14 +1,13 @@
-def mod(modular, base, exponent = 1): # return a^b(mod n)
-    """Return a**b(mod n) where
-    a,b,n correspond to base, exponent, modular."""
-    binary = bin(exponent);
+def mod(m, b, e = 1): # return a^b(mod n)
+    """Return b**e(mod n)."""
+    binary = bin(e);
     binary.reverse();
-    # Ger the binary representation of the exponent
-    result, square = 1, base%modular;
+    # Ger the binary representation of the e
+    result, square = 1, b%m;
     for i in range(len(binary)):
         if binary[i]:
-            result = (square*result) % modular;
-        square = (square**2) % modular;
+            result = (square*result) % m;
+        square = (square**2) % m;
     return result;
 
 def gcd(a, b):
