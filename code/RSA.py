@@ -2,7 +2,7 @@ from basic import mod, gcd, multiplicative_inverse;
 from primality import generate_large_prime;
 from random import randint;
 
-class RSA:
+class RSA_protocol:
     """RSA encryption/decryption algorithm"""
     DEFAULT_KEY_LENGTH = 256;
     SECURITY_LEVEL = 30;
