@@ -4,7 +4,7 @@ from arithmetic import euler_totient;
 
 def ord(n, b): # Multiplicative order
     """Return the smallest positive integer e such that b**e=1(mod n)."""
-    if gcd(n, b) != 1:
+    if gcd(n, b) != 1 or n == 1:
         raise Exception("Multiplicative order is not defined");
     e = 1;
     power = b%n;

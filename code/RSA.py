@@ -30,15 +30,16 @@ class RSA_protocol:
     def encrypt(cls, message, public_key):
         """Encode plain text into cipher text"""
         if isinstance(public_key, RSA_public_key):
-            return mod(public_key.n, message, public_key.e);
+            return RSA_cipher(mod(public_key.n, message, public_key.e));
         else:
             raise Exception("Argument type mismatch");
 
     @classmethod
     def decrypt(cls, cipher, private_key):
         """Decode cipher text into plain text"""
-        if isinstance(private_key, RSA_private_key):
-            return mod(private_key.n, cipher, private_key.d);
+        if isinstance(cipher, RSA_cipher) \
+        and isinstance(private_key, RSA_private_key):
+            return mod(private_key.n, cipher.c, private_key.d);
         else:
             raise Exception("Argument type mismatch");
 
@@ -53,3 +54,8 @@ class RSA_private_key:
     def __init__(self, n, d):
         self.n = n;
         self.d = d;
+
+class RSA_cipher:
+    """Represents a message transmitted in encoded fashion"""
+    def __init__(self, c):
+        self.c = c;
