@@ -20,6 +20,23 @@ def carmichael_function(n): # lambda
             result = lcm(result, euler_totient(i**factors[i]));
     return result;
 
+def count_prime_factors(n, distinct=True): # omega
+    """Return the number of (distinct) prime factors to integer 'n'
+    When 'distinct'=True, multiplicity is not counted"""
+    factors = factorize(n);
+    if distinct:
+        return len(factors);
+    else:
+        return sum(factors[i] for i in factors);
+
+def liouville_function(n): # lambda
+    """Return (-1)**(Omega(n)) where Omega counts the number of prime factors,
+    with multiplicity, of 'n'"""
+    if count_prime_factors(n, False)%2:
+        return -1;
+    else:
+        return 1;
+
 def mobius_function(n): # mu
     """Check the prime factorization of n.
     Return 0 if n is not square-free (has no square divisors)
