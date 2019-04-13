@@ -91,7 +91,7 @@ def generate_large_prime(digit = 256, trials = DEFAULT_TRIALS):
     'digit' specifies the length of the number.
     'trials' decides how many Miller Rabin tests to perform."""
     while(True):
-        n = randint(10**(digit-1), 10**digit);
+        n = randint(10**(digit-1)+1, 10**digit);
         if(miller_rabin_test(n, trials)):
             return n;
 
