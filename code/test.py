@@ -1,18 +1,13 @@
 from basic import *
 from primality import *
+from RSA import RSA_protocol
+from ElGamal import ElGamal_protocol
 
 if __name__ == "__main__":
     digit = 256;
-    for i in range(10):
-        print(i);
-        p = generate_large_prime(digit, False);
-        q = generate_large_prime(digit, False);
-        n = p * q;
-        period = (p-1) * (q-1);
-        while(True):
-            e = randint(1, n-1);
-            if gcd(period, e) == 1:
-                break;
-        # e has to be invertible
-        d = multiplicative_inverse(period, e);
-        print((d*e)%period);
+    message = 1997101312344132;
+    (k1,k2) = ElGamal_protocol.generate_keys(digit);
+    cipher = ElGamal_protocol.encrypt(message, k1);
+    recover = ElGamal_protocol.decrypt(cipher, k2);
+
+    print(recover);

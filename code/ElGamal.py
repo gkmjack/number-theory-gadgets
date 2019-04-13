@@ -1,15 +1,23 @@
 from basic import mod, multiplicative_inverse;
+from primality import generate_large_prime;
 from random import randint;
 
 class ElGamal_protocol:
     """ElGamal encryption/decryption algorithm"""
     @classmethod
-    def generate_keys():
-        pass;
+    def generate_keys(cls, digit):
+        p = generate_large_prime(digit);
+        g = randint(1, p-1); # This needs update
+        a = randint(1, p-1);
+        A = mod(p, g, a);
+        # Give the sender hints
+        public_key = ElGamal_public_key(p, g, A);
+        private_key = ElGamal_private_key(p, g, a);
+        return (public_key, private_key);
 
     @classmethod
     def encrypt(cls, message, public_key):
-        b = randint(1, n-1);
+        b = randint(1, public_key.p-1);
         s = mod(public_key.p, public_key.A, b);
         # Generate the random secret
         c = mod(public_key.p, message*s);
@@ -34,7 +42,7 @@ class ElGamal_public_key:
 
 class ElGamal_private_key:
     """Used for decryption"""
-    def __init__(self, a):
+    def __init__(self, p, g, a):
         self.p = p;
         self.g = g;
         self.a = a;

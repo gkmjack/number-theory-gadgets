@@ -4,11 +4,9 @@ from random import randint;
 
 class RSA_protocol:
     """RSA encryption/decryption algorithm"""
-    DEFAULT_KEY_LENGTH = 256;
-    SECURITY_LEVEL = 30;
 
     @classmethod
-    def generate_keys(cls, digit = DEFAULT_KEY_LENGTH):
+    def generate_keys(cls, digit):
         """Generate public and private keys.
         The length of each number is roughly twice the value of 'digit'"""
         p = generate_large_prime(digit);
