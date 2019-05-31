@@ -15,17 +15,32 @@ def mod(n, b, e = 1): # return a^b(mod n)
         square = (square**2) % n;
     return result;
 
-def gcd(a, b):
-    """Return the greatest common divisor of a and b"""
-    if (a < b):
-        a, b = b, a; # Make sure a is always bigger
-    while b:
-        a, b = b, a%b;
-    return a;
+def gcd(*n):
+    """Return the greatest common divisor of several positive integers"""
+    n = list(n); # Convert tuple into list
+    while(len(n) > 1):
+        a = n[0];
+        b = n[1];
+        if (a < b):
+            a, b = b, a; # Make sure a is always bigger
+        while b:
+            a, b = b, a%b;
+        del n[0];
+        n[0] = a;
+    return n[0];
 
-def lcm(a, b):
-    """Return the least common multiple of a and b"""
-    return int(a*b/gcd(a,b));
+
+def lcm(*n):
+    """Return the least common multiple of several positive integers"""
+    n = list(n);
+    while(len(n) > 1):
+        a = n[0];
+        b = n[1];
+        g = gcd(a,b);
+        (l,_) = large_integer_division(a*b, g);
+        del n[0];
+        n[0] = l;
+    return n[0];
 
 
 def multiplicative_inverse(n, a):
