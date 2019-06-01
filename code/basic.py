@@ -37,7 +37,7 @@ def lcm(*n):
         a = n[0];
         b = n[1];
         g = gcd(a,b);
-        (l,_) = large_integer_division(a*b, g);
+        (l,_) = integer_division(a*b, g);
         del n[0];
         n[0] = l;
     return n[0];
@@ -49,10 +49,16 @@ def multiplicative_inverse(n, a):
     return b%n;
 
 
-def solve_linear_diophantine(a, b):
-    """Return a pair of integer solutions (x,y) to ax+by=1"""
-    if gcd(a,b)!=1:
+def solve_linear_diophantine(a, b, c = 1):
+    """Return a pair of integer solutions (x,y) to ax+by=c"""
+    g = gcd(a, b);
+    (c, r) = integer_division(c, g);
+    if r != 0:
         raise Exception("No solutions exist");
+    (a, _) = integer_division(a, g);
+    (b, _) = integer_division(b, g);
+    # Divide the equation by gcd(a,b)
+
     flipped = False;
     if (a < b):
         a, b = b, a;
@@ -60,15 +66,15 @@ def solve_linear_diophantine(a, b):
     # Perform extended Euclidean algorithm
     w = {a:(1,0), b:(0,1)};
     while b != 1:
-        (q, r) = large_integer_division(a, b);
+        (q, r) = integer_division(a, b);
         # Ensure that precision overflow doesn't happen
         w[r] = (w[a][0]-w[b][0]*q, w[a][1]-w[b][1]*q);
         a, b = b, r;
     # Flip the result back
     if flipped:
-        return (w[1][1], w[1][0]);
+        return (c*w[1][1], c*w[1][0]);
     else:
-        return w[1];
+        return (c*w[1][0], c*w[1][1]);
 
 
 def bin(n):
@@ -79,7 +85,7 @@ def bin(n):
         n = n >> 1;
     return result;
 
-def large_integer_division(dividend, divisor):
+def integer_division(dividend, divisor):
     """Return the quotient and remainder after huge integer division.
     Both return values are INTEGERS. This avoids precision overflow."""
     shift_amount = 0;
