@@ -20,9 +20,7 @@ class RSA_protocol:
         # e has to be invertible
         d = multiplicative_inverse(period, e);
 
-        public_key = RSA_public_key(n, e);
-        private_key = RSA_private_key(n, d);
-        return (public_key, private_key);
+        return (RSA_public_key(n, e), RSA_private_key(n, d));
 
     @classmethod
     def encrypt(cls, message, public_key):

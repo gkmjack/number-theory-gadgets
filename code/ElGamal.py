@@ -11,9 +11,7 @@ class ElGamal_protocol:
         a = randint(1, p-1);
         A = mod(p, g, a);
         # Give the sender hints
-        public_key = ElGamal_public_key(p, g, A);
-        private_key = ElGamal_private_key(p, g, a);
-        return (public_key, private_key);
+        return (ElGamal_public_key(p, g, A), ElGamal_private_key(p, g, a));
 
     @classmethod
     def encrypt(cls, message, public_key):

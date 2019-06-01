@@ -100,10 +100,7 @@ def korselt_criterion(n):
     if (is_prime(n)):
         return 0;
 
-    prime_divisors = [];
-    for i in range(2,n):
-        if (n%i == 0 and is_prime(i)):
-            prime_divisors.append(i);
+    prime_divisors = factorize(n);
 
     for p in prime_divisors:
         if (n%(p**2)==0) or ((n-1)%(p-1)!=0):
