@@ -45,17 +45,19 @@ def fermat_test(n, trials = DEFAULT_TRIALS, show_witness = False):
 
 def miller_rabin_test(n, trials = DEFAULT_TRIALS, show_witness = False):
     """Using Miller-Rabin test, to check (with very high confidence)
-    whether a positive odd integer 'n'(>=3) is prime."""
+    whether a positive odd integer 'n'(>=2) is prime."""
+    if n == 2:
+        return 1;
     if (n%2 == 0):
         return 0;
     s = 0;
     while (n-1) % 2**(s+1) == 0:
         s += 1;
     t = (n-1) >> s;
-    # Finding the biggest 's' such that 2**s divides n
+    # Finding the biggest 's' such that (2**s) divides n
 
     for i in range(trials):
-        witness = randint(2, n-2);
+        witness = randint(1, n-1);
         temp = mod(n, witness, t);
         if (temp%n) == 1:
             continue;
