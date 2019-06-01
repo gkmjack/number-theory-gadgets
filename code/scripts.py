@@ -1,5 +1,5 @@
 from random import randint;
-from basic import *;
+from Euclid import *;
 from primality import *;
 from math import log;
 

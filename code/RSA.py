@@ -1,4 +1,5 @@
-from basic import mod, gcd, multiplicative_inverse;
+from Euclid import gcd;
+from modular import mod, multiplicative_inverse;
 from primality import generate_large_prime;
 from random import randint;
 

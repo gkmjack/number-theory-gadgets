@@ -1,4 +1,4 @@
-from basic import mod, multiplicative_inverse;
+from modular import mod, multiplicative_inverse;
 from primality import generate_large_prime;
 from random import randint;
 

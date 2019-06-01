@@ -1,4 +1,4 @@
-from basic import *
+from Euclid import *
 from primality import *
 from RSA import RSA_protocol
 from ElGamal import ElGamal_protocol

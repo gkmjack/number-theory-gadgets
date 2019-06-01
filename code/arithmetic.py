@@ -1,4 +1,4 @@
-from basic import lcm;
+from Euclid import lcm;
 from primality import factorize, is_prime;
 
 def euler_totient(n): # phi

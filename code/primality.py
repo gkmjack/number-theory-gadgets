@@ -1,5 +1,6 @@
 from random import randint;
-from basic import mod, gcd;
+from Euclid import gcd;
+from modular import mod;
 
 DEFAULT_TRIALS = 50;
 

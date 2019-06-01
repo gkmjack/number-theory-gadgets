@@ -1,4 +1,5 @@
-from basic import gcd, mod;
+from Euclid import gcd;
+from modular import mod;
 from primality import factorize;
 from arithmetic import euler_totient;
 

@@ -1,17 +1,3 @@
-def mod(n, b, e = 1): # return a^b(mod n)
-    """Return b**e(mod n)."""
-    if e < 0:
-        b, e = multiplicative_inverse(n, b), -e;
-    # Account for negative power
-
-    result, square = 1, b%n;
-    while e:
-        if e & 1:
-            result = (result*square) % n;
-        square = (square**2) % n;
-        e >>= 1;
-    return result;
-
 def gcd(*n):
     """Return the greatest common divisor of several positive integers"""
     n = list(n); # Convert tuple into list
@@ -26,7 +12,6 @@ def gcd(*n):
         n[0] = a;
     return n[0];
 
-
 def lcm(*n):
     """Return the least common multiple of several positive integers"""
     n = list(n);
@@ -37,13 +22,6 @@ def lcm(*n):
         del n[0];
         n[0] = (a*b)//g;
     return n[0];
-
-
-def multiplicative_inverse(n, a):
-    """Return the multiplicative inverse of a mod n"""
-    (_, b) = solve_linear_diophantine(n, a);
-    return b%n;
-
 
 def solve_linear_diophantine(a, b, c = 1):
     """Return a pair of integer solutions (x,y) to ax+by=c"""
