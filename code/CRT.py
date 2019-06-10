@@ -1,4 +1,5 @@
 from Euclid import solve_linear_diophantine;
+from Euclid import lcm;
 from primality import miller_rabin_test;
 from primality import factorize;
 
@@ -12,19 +13,16 @@ def split(n, x):
     return c;
 
 def merge(c):
-    """Use Chinese Remainder Theorem to combine a system of congruences.
-    E.g. x=a mod p, x=b mod q, etc, where p, q are primes."""
-    for p in c:
-        if not miller_rabin_test(p):
-            raise Exception("Non-prime modulo given.");
-        c[p] %= p;
+    """Use Chinese Remainder Theorem to combine a system of congruences:
+    E.g. x=a mod m, x=b mod n, etc, into a single one."""
 
-    m = list(c);
-    while(len(m)>1):
-        (p, q) = (m[0], m[1]);
-        (s, t) = solve_linear_diophantine(p, q);
-        del m[0];
-        m[0] = p*q;
-        c[p*q] = (s*p*c[q]+t*q*c[p]) % (p*q);
+    modulo = list(c);
+    while(len(modulo)>1):
+        (m, n) = (modulo[0], modulo[1]);
+        (a, b) = (c[m], c[n]);
+        (s, _) = solve_linear_diophantine(m, -n, b-a);
+        del modulo[0];
+        M = modulo[0] = lcm(m, n);
+        c[M] = (s*m+a) % M;
 
-    return (m[0], c[m[0]]);
+    return (modulo[0], c[modulo[0]]);

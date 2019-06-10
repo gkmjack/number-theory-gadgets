@@ -25,6 +25,13 @@ def lcm(*n):
 
 def solve_linear_diophantine(a, b, c = 1):
     """Return a pair of integer solutions (x,y) to ax+by=c"""
+    if (a < 0):
+        result = solve_linear_diophantine(-a, b, c);
+        return (-result[0], result[1]);
+    if (b < 0):
+        result = solve_linear_diophantine(a, -b, c);
+        return (result[0], -result[1]);
+
     g = gcd(a, b);
     if c%g != 0:
         raise Exception("No solutions exist");
