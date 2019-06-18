@@ -3,33 +3,35 @@ from primality import is_prime, factorize, miller_rabin_test;
 from random import randint;
 from modular import multiplicative_inverse;
 
-def legendre_symbol(p, a, recursive = False):
-    """Compute the Legendre symbol (a/p) where p is an odd prime.
-    When 'recursive' option is set, use the law of quadratic reciprocity;
-    otherwise, use Euler's criterion."""
+def jacobi_symbol(n, a):
+    """Compute the Jacobi symbol (a/n) where n is an odd number."""
+    if (n%2 == 0):
+        raise Exception("Invalid Jacobi symbol.");
+    # Check that n is indeed odd.
+    a %= n;
+    if (a == 0 or a == 1):
+        return a;
+    if (a == 2):
+        if (n%8==1 or n%8==7):
+            return 1;
+        if (n%8==3 or n%8==5):
+            return -1;
+    if (a%2 == 0):
+        return jacobi_symbol(n, 2) * jacobi_symbol(n, a>>1);
+    if (n%4 == 3 and a%4 == 3):
+        return -jacobi_symbol(a, n);
+    else:
+        return jacobi_symbol(a, n);
+
+
+def legendre_symbol(p, a):
+    """Compute the Legendre symbol (a/p) where p is an odd prime."""
     if (p == 1) or (p%2 == 0) or (miller_rabin_test(p) == 0):
         raise Exception("Invalid Legendre symbol");
     # Check that p is indeed an odd prime
-    a %= p;
-    if recursive:
-        if (a == 0 or a == 1):
-            return a;
-        if a == 2:
-            return legendre_symbol(a, p, False);
-        if is_prime(a):
-            if (a%4==3 and p%4==3):
-                return -legendre_symbol(p, a, True);
-            else:
-                return legendre_symbol(p, a, True);
-        factors = factorize(a);
-        result = 1;
-        for i in factors:
-            if factors[i]%2:
-                result *= legendre_symbol(i, p, True);
-    else:
-        result = mod(p, a, (p-1)>>1);
-        if result == (p-1):
-            result = -1;
+    result = mod(p, a, (p-1)>>1);
+    if result == (p-1):
+        result = -1;
     return result;
 
 def random_residue(p, is_residue = True):
