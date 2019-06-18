@@ -1,6 +1,7 @@
 from random import randint;
 from Euclid import gcd;
 from modular import mod;
+from quadratic_residue import jacobi_symbol;
 
 DEFAULT_TRIALS = 50;
 
@@ -43,13 +44,27 @@ def fermat_test(n, trials = DEFAULT_TRIALS, show_witness = False):
             return 0;
     return 1;
 
+def solovay_strassen_test(n, trials = DEFAULT_TRIALS, show_witness = False):
+    """Using Solovay-Strassen test, to check (with high confidence)
+    whether a positive odd integer 'n'(>=3) is prime."""
+    if (n%2 == 0 or n == 1):
+        raise Exception("Solovay Strassen test only checks odd integers.");
+    for i in range(trials):
+        witness = randint(1, n-1);
+        j_s = jacobi_symbol(n, witness);
+        if (j_s == 0 or j_s%n != mod(n, witness, (n-1)>>1)):
+            if show_witness:
+                print("Witness:", witness);
+            return 0;
+    return 1;
+
+
+
 def miller_rabin_test(n, trials = DEFAULT_TRIALS, show_witness = False):
     """Using Miller-Rabin test, to check (with very high confidence)
-    whether a positive odd integer 'n'(>=2) is prime."""
-    if n == 2:
-        return 1;
-    if (n%2 == 0):
-        return 0;
+    whether a positive odd integer 'n'(>=3) is prime."""
+    if (n%2 == 0 or n == 1):
+        raise Exception("Miller-Rabin test only checks odd integers.");
     s = 0;
     while (n-1) % 2**(s+1) == 0:
         s += 1;
