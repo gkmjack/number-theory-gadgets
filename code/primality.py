@@ -1,7 +1,7 @@
 from random import randint;
 from Euclid import gcd;
 from modular import mod;
-from quadratic_residue import jacobi_symbol;
+import quadratic_residue; # No splat import
 
 DEFAULT_TRIALS = 50;
 
@@ -51,7 +51,7 @@ def solovay_strassen_test(n, trials = DEFAULT_TRIALS, show_witness = False):
         raise Exception("Solovay Strassen test only checks odd integers.");
     for i in range(trials):
         witness = randint(1, n-1);
-        j_s = jacobi_symbol(n, witness);
+        j_s = quadratic_residue.jacobi_symbol(n, witness);
         if (j_s == 0 or j_s%n != mod(n, witness, (n-1)>>1)):
             if show_witness:
                 print("Witness:", witness);

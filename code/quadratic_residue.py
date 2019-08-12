@@ -1,7 +1,7 @@
 from modular import mod;
-from primality import is_prime, factorize, miller_rabin_test;
 from random import randint;
 from modular import multiplicative_inverse;
+import primality; # No splat import
 
 def jacobi_symbol(n, a):
     """Compute the Jacobi symbol (a/n) where n is an odd number."""
@@ -26,7 +26,7 @@ def jacobi_symbol(n, a):
 
 def legendre_symbol(p, a):
     """Compute the Legendre symbol (a/p) where p is an odd prime."""
-    if (p == 1) or (p%2 == 0) or (miller_rabin_test(p) == 0):
+    if (p == 1) or (p%2 == 0) or (primality.miller_rabin_test(p) == 0):
         raise Exception("Invalid Legendre symbol");
     # Check that p is indeed an odd prime
     result = mod(p, a, (p-1)>>1);
